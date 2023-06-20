@@ -107,6 +107,10 @@ public class AddProductController {
         return "productForm";
     }
 
+    //add Buy Now button here
+    //use a getter/setter to decrement the inventory by 1
+    //return the user to a page that indicates a success message and has a link back to the mainscreen
+
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
