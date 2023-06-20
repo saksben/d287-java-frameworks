@@ -1,10 +1,14 @@
 D287 Java Frameworks PA - Benjamin Saks
 
 ***C. Customize the HTML user interface for your customer’s application. The user interface should include the shop name, the product names, and the names of the parts.***
-File name: 
-Line: 
-Change description: 
+File name: mainscreen.html
+Line: 14, 19, 21, 53
+Change description: changed the title, headline, and section headlines to my custom design. Will add the sample names in section E.
 Change: 
+14 <title>My Classic Car Store</title>
+19 <h1>Classic Auto Store</h1>
+21 <h2>Car Parts</h2>
+53 <h2>Classic Cars</h2>
 
 ***D. Add an “About” page to the application to describe your chosen customer’s company to web viewers and include navigation to and from the “About” page and the main screen.***
 File name: 
