@@ -256,11 +256,64 @@ public class AboutController {
 **The “Buy Now” button must be next to the buttons that update and delete products.**
 **The button should decrement the inventory of that product by one. It should not affect the inventory of any of the associated parts.**
 **Display a message that indicates the success or failure of a purchase.**
-**File name:** 
-**Line:** 
-**Change description:** 
+**File name:** confirmationbuynow.html
+**Line:** 1-12
+**Change description:** creates purchase confirmation page
 **Change:** 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation Buy Now</title>
+</head>
+<body>
+<h1>Classic Auto Store</h1>
+  <p>Congratulations! Your purchase was successful.</p>
+  <a href="http://localhost:8080">Back to the Mainscreen</a>
+</body>
+</html>
 
+**File name:** unsuccessfulbuynow.html
+**Line:** 1-12
+**Change description:** creates unsuccessful purchase page
+**Change:** 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unsuccessful Buy Now</title>
+</head>
+<body>
+<h1>Classic Auto Store</h1>
+  <p>You did not successfully buy this product because its inventory is 0.</p>
+  <a href="http://localhost:8080">Back to the Mainscreen</a>
+</body>
+</html>
+
+**File name:** mainscreen.html
+**Line:** 84
+**Change description:** creates the Buy Now button
+**Change:** 
+84                <a th:href="@{/decrementProduct(productID=${tempProduct.id})}" class="btn btn-primary btn-sm mb-3">Buy Now</a>
+
+**File name:** AddProductController.java
+**Line:** 131-144
+**Change description:** creates method for decrementing product's inventory by 1 from the database and validating it
+**Change:** 
+131 @GetMapping("/decrementProduct")
+    public String decrementProduct(@RequestParam("productID") int theId, Model theModel) {
+        ProductService repo = context.getBean(ProductServiceImpl.class);
+        Product product3 = repo.findById(theId);
+        int inv = product3.getInv();
+        if (inv > 0) {
+            product3.setInv(inv - 1);
+            repo.save(product3);
+            return "confirmationbuynow";
+        } else {
+            return "unsuccessfulbuynow";
+        }
+    }
+    
 ***G. Modify the parts to track maximum and minimum inventory by doing the following:***
 **Add additional fields to the part entity for maximum and minimum inventory.**
 **Modify the sample inventory to include the maximum and minimum fields.**

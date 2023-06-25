@@ -128,6 +128,20 @@ public class AddProductController {
         return "productForm";
     }
 
+    @GetMapping("/decrementProduct")
+    public String decrementProduct(@RequestParam("productID") int theId, Model theModel) {
+        ProductService repo = context.getBean(ProductServiceImpl.class);
+        Product product3 = repo.findById(theId);
+        int inv = product3.getInv();
+        if (inv > 0) {
+            product3.setInv(inv - 1);
+            repo.save(product3);
+            return "confirmationbuynow";
+        } else {
+            return "unsuccessfulbuynow";
+        }
+    }
+
     //add Buy Now button here
     //use a getter/setter to decrement the inventory by 1
     //return the user to a page that indicates a success message and has a link back to the mainscreen
