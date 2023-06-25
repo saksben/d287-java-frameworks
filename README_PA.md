@@ -61,10 +61,196 @@ public class AboutController {
 
 ***E. Add a sample inventory appropriate for your chosen store to the application. You should have five parts and five products in your sample inventory and should not overwrite existing data in the database.***
 **Note: Make sure the sample inventory is added only when both the part and product lists are empty. When adding the sample inventory appropriate for the store, the inventory is stored in a set so duplicate items cannot be added to your products. When duplicate items are added, make a “multi-pack” part.**
-**File name:** 
-**Line:** 
+**File name:** BootStrapData
+**Line:** 3, 17, 70-152, 154, 156
+**Change description:** creates sample inventory for Products and Parts. Creates Set for deduplication. Creates multi-pack name change for duplicates. Improves readability for print statements.
+**Change:** 
+3 import com.example.demo.domain.InhousePart;
+
+17 import java.util.*;
+
+70      Set<Product> sampleProducts = new HashSet<Product>();
+        Set<Part> sampleParts = new HashSet<>();
+
+        Product camaro = new Product(1, "Chevrolet Camaro", 27795.00, 7);
+        Product mustang = new Product(2, "Ford Mustang", 27770.00, 5);
+        Product challenger = new Product(3, "Dodge Challenger", 30545.00, 4);
+        Product gto = new Product(4, "Pontiac GTO", 20200.00, 2);
+        Product corvette = new Product(5, "Chevrolet Corvette", 64500.00, 3);
+
+        sampleProducts.add(camaro);
+        sampleProducts.add(mustang);
+        sampleProducts.add(challenger);
+        sampleProducts.add(gto);
+        sampleProducts.add(corvette);
+
+        System.out.println("Set: " + sampleProducts);
+
+//        Part tire = new InhousePart("Tire", 249.99, 25);
+//        Part stereo = new InhousePart("Stereo", 99.97, 9);
+//        Part steering = new InhousePart("Steering Wheel", 79.99, 11);
+//        Part spoiler = new InhousePart("Spoiler", 99.97, 7);
+//        Part engine = new InhousePart("V8 Engine", 6999.97, 5);
+
+        InhousePart tire = new InhousePart();
+        tire.setId(1);
+        tire.setName("Tire");
+        tire.setPrice(249.99);
+        tire.setInv(25);
+
+        InhousePart stereo = new InhousePart();
+        stereo.setId(2);
+        stereo.setName("Stereo");
+        stereo.setPrice(249.99);
+        stereo.setInv(25);
+
+        InhousePart steering = new InhousePart();
+        steering.setId(3);
+        steering.setName("Steering");
+        steering.setPrice(249.99);
+        steering.setInv(25);
+
+        InhousePart spoiler = new InhousePart();
+        spoiler.setId(4);
+        spoiler.setName("Spoiler");
+        spoiler.setPrice(249.99);
+        spoiler.setInv(25);
+
+        InhousePart engine = new InhousePart();
+        engine.setId(5);
+        engine.setName("Engine");
+        engine.setPrice(249.99);
+        engine.setInv(25);
+
+        sampleParts.add(tire);
+        sampleParts.add(stereo);
+        sampleParts.add(steering);
+        sampleParts.add(spoiler);
+        sampleParts.add(engine);
+
+
+
+        if (partRepository.count() == 0 && productRepository.count() == 0) {
+            for (Product product : sampleProducts) {
+                productRepository.save(product);
+            }
+
+            for (Part part : sampleParts) {
+                partRepository.save(part);
+            }
+
+//            productRepository.save(camaro);
+//            productRepository.save(mustang);
+//            productRepository.save(challenger);
+//            productRepository.save(gto);
+//            productRepository.save(corvette);
+//
+//            partRepository.save(tire);
+//            partRepository.save(stereo);
+//            partRepository.save(steering);
+//            partRepository.save(spoiler);
+//            partRepository.save(engine);
+        }
+
+154      System.out.println("Number of Products: " +productRepository.count());
+
+156      System.out.println("Number of Parts: "+partRepository.count());
+
+**File name:** Product.java
+**Line:** 50-53
+**Change description:** multi pack - product
+**Change:** 
+50
+    public void multiProduct() {
+        this.setName(this.getName() + " (multi)");
+    }
+
+**File name:** AddProductController.java
+**Line:** 18, 20, 36-38, 91-106
+**Change description:** multi pack - product
+**Change:** 
+18 import java.util.HashSet;
+
+20 import java.util.Set;
+
+36  
+    private Set<Product> listProducts = new HashSet<>();
+    private boolean verify = false;
+
+91          for (Product thing : listProducts) {
+                if (thing.getName().equals(product.getName())) {
+                    verify = true;
+                } else {
+                    verify = false;
+                }
+            }
+
+            if (verify == true) {
+                product.multiProduct();
+                listProducts.add(product);
+            } else {
+                listProducts.add(product);
+            }
+
+**File name:** Part.java
+**Line:** 53-56
 **Change description:** 
 **Change:** 
+53  public void multiPart() {
+        this.setName(this.getName() + " (multi)");
+    }
+
+**File name:** AddOutsourcedPartController
+**Line:** 21, 22, 32-34, 55-70
+**Change description:** 
+**Change:** 
+21 import java.util.HashSet;
+
+22 import java.util.Set;
+
+32  private Set<Part> listParts = new HashSet<>();
+    private boolean verify = false;
+
+55          for (Part thing : listParts) {
+                if (thing.getName().equals(part.getName())) {
+                    verify = true;
+                } else {
+                    verify = false;
+                }
+            }
+
+            if (verify == true) {
+                part.multiPart();
+                listParts.add(part);
+            } else {
+                listParts.add(part);
+            }
+
+**File name:** AddInhousePartController
+**Line:** 20, 21, 31-33, 54-69
+**Change description:** 
+**Change:** 
+20 import java.util.HashSet;
+21 import java.util.Set;
+
+31  private Set<Part> listParts = new HashSet<>();
+    private boolean verify = false;
+
+54 
+            for (Part thing : listParts) {
+                if (thing.getName().equals(part.getName())) {
+                    verify = true;
+                } else {
+                    verify = false;
+                }
+            }
+
+            if (verify == true) {
+                part.multiPart();
+                listParts.add(part);
+            } else {
+                listParts.add(part);
+            }
 
 ***F. Add a “Buy Now” button to your product list. Your “Buy Now” button must meet each of the following parameters:***
 **The “Buy Now” button must be next to the buttons that update and delete products.**
@@ -80,7 +266,7 @@ public class AboutController {
 **Modify the sample inventory to include the maximum and minimum fields.**
 **Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.**
 **Rename the file the persistent storage is saved to.**
-**Modify the code to enforce that the inventory is between or at the minimum and maximum value.**
+**Modify the code to enforce that the inventory is between or at the minimum and maximum value.** 
 **File name:** 
 **Line:** 
 **Change description:** 

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -45,6 +46,10 @@ public class Product implements Serializable {
         this.name = name;
         this.price = price;
         this.inv = inv;
+    }
+
+    public void multiProduct() {
+        this.setName(this.getName() + " (multi)");
     }
 
     public long getId() {

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -31,6 +33,9 @@ public class AddProductController {
     private List<Part> theParts;
     private static Product product1;
     private Product product;
+
+    private Set<Product> listProducts = new HashSet<>();
+    private boolean verify = false;
 
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model theModel) {
@@ -83,6 +88,22 @@ public class AddProductController {
             else{
                 product.setInv(0);
             }
+
+            for (Product thing : listProducts) {
+                if (thing.getName().equals(product.getName())) {
+                    verify = true;
+                } else {
+                    verify = false;
+                }
+            }
+
+            if (verify == true) {
+                product.multiProduct();
+                listProducts.add(product);
+            } else {
+                listProducts.add(product);
+            }
+
             repo.save(product);
             return "confirmationaddproduct";
         }

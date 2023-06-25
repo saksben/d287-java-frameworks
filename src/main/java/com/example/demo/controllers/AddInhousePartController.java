@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -26,6 +28,9 @@ import javax.validation.Valid;
  */
 @Controller
 public class AddInhousePartController{
+    private Set<Part> listParts = new HashSet<>();
+    private boolean verify = false;
+
     @Autowired
     private ApplicationContext context;
 
@@ -46,6 +51,22 @@ public class AddInhousePartController{
         InhousePartService repo=context.getBean(InhousePartServiceImpl.class);
         InhousePart ip=repo.findById((int)part.getId());
         if(ip!=null)part.setProducts(ip.getProducts());
+
+            for (Part thing : listParts) {
+                if (thing.getName().equals(part.getName())) {
+                    verify = true;
+                } else {
+                    verify = false;
+                }
+            }
+
+            if (verify == true) {
+                part.multiPart();
+                listParts.add(part);
+            } else {
+                listParts.add(part);
+            }
+
             repo.save(part);
 
         return "confirmationaddpart";}
