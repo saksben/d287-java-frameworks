@@ -320,10 +320,156 @@ public class AboutController {
 **Add to the InhousePartForm and OutsourcedPartForm forms additional text inputs for the inventory so the user can set the maximum and minimum values.**
 **Rename the file the persistent storage is saved to.**
 **Modify the code to enforce that the inventory is between or at the minimum and maximum value.** 
-**File name:** 
-**Line:** 
-**Change description:** 
+**File name:** Part.java
+**Line:** 4, 21, 34-38, 60-76, 114-129
+**Change description:** sets up max/min inventory columns/variables/constructors/getters/setters, applies validator
 **Change:** 
+4 import com.example.demo.validators.ValidMinMax;
+21 @ValidMinMax
+34  @Column(name = "MAX_INV")
+    int max_inv;
+    @Column(name = "MIN_INV")
+    int min_inv;
+60 
+    public Part(String name, double price, int inv, int max_inv, int min_inv) {
+    this.name = name;
+    this.price = price;
+    this.inv = inv;
+    this.max_inv = max_inv;
+    this.min_inv = min_inv;
+    }
+
+    public Part(long id, String name, double price, int inv, int max_inv, int min_inv) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+        this.max_inv = max_inv;
+        this.min_inv = min_inv;
+    }
+
+114 public int getMax_inv() {
+        return max_inv;
+    }
+
+    public void setMax_inv(int max_inv) {
+        this.max_inv = max_inv;
+    }
+
+    public int getMin_inv() {
+        return min_inv;
+    }
+
+    public void setMin_inv(int min_inv) {
+        this.min_inv = min_inv;
+    }
+
+
+**File name:** mainscreen.html
+**Line:** 39-40, 49-50
+**Change description:** Added Max/Min Inventory to table and its fields
+**Change:** 
+39          <th>Max Inventory</th>
+            <th>Min Inventory</th>
+
+49          <td th:text="${tempPart.max_inv}">1</td>
+            <td th:text="${tempPart.min_inv}">1</td>
+
+**File name:** BootStrapData.java
+**Line:** 98-99, 106-107, 114-115, 122-123, 130-131
+**Change description:** adds max/min inventory to sample data
+**Change:** 
+98      tire.setMax_inv(100);
+        tire.setMin_inv(1);
+
+106     stereo.setMax_inv(100);
+        stereo.setMin_inv(1);
+
+114     steering.setMax_inv(100);
+        stereo.setMin_inv(1);
+
+122     spoiler.setMax_inv(100);
+        spoiler.setMin_inv(1);
+
+130     engine.setMax_inv(100);
+        engine.setMin_inv(1);
+
+**File name:** InhousePartForm.html
+**Line:** 24-27, 30-31
+**Change description:** adds max/min inventory fields to form, displays validation error
+**Change:** 
+24  <p><input type="text" th:field="*{max_inv}" placeholder="Max Inventory" class="form-control mb-4 col-4"/></p>
+
+26  <p><input type="text" th:field="*{min_inv}" placeholder="Min Inventory" class="form-control mb-4 col-4"/></p>
+
+30  <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
+
+
+**File name:** OutsourcedPartForm.html
+**Line:** 25-28, 31-32
+**Change description:** adds max/min inventory fields to form, displays validation error
+**Change:** 
+25  <p><input type="text" th:field="*{max_inv}" placeholder="Max Inventory" class="form-control mb-4 col-4"/></p>
+
+    <p><input type="text" th:field="*{min_inv}" placeholder="Min Inventory" class="form-control mb-4 col-4"/></p>
+
+31  <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
+
+**File name:** application.properties
+**Line:** 6
+**Change description:** changes name of database file
+**Change:** 
+spring.datasource.url=jdbc:h2:file:~/classic-auto-store
+
+**File name:** MinMaxValidator.java
+**Line:** 1-26
+**Change description:** creates validator class
+**Change:** 
+package com.example.demo.validators;
+
+import com.example.demo.domain.Part;
+import org.springframework.beans.BeanWrapperImpl;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class MinMaxValidator implements ConstraintValidator<ValidMinMax, Part> {
+
+
+    @Override
+    public void initialize(ValidMinMax constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+    }
+
+    @Override
+    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (part.getInv() <= part.getMax_inv() && part.getInv() >= part.getMin_inv()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
+**File name:** ValidMinMax.java
+**Line:** 1-14
+**Change description:** creates validator annotation
+**Change:** 
+package com.example.demo.validators;
+
+import javax.validation.Constraint;
+import javax.validation.Payload;
+import java.lang.annotation.*;
+
+@Constraint(validatedBy = {MinMaxValidator.class})
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ValidMinMax {
+    String message() default "Inventory must be between min and max";
+    Class<?> [] groups() default {};
+    Class<? extends Payload> [] payload() default {};
+}
 
 ***H. Add validation for between or at the maximum and minimum fields. The validation must include the following:***
 **Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.**

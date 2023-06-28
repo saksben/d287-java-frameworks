@@ -95,30 +95,40 @@ public class BootStrapData implements CommandLineRunner {
         tire.setName("Tire");
         tire.setPrice(249.99);
         tire.setInv(25);
+        tire.setMax_inv(100);
+        tire.setMin_inv(1);
 
         InhousePart stereo = new InhousePart();
         stereo.setId(2);
         stereo.setName("Stereo");
         stereo.setPrice(249.99);
         stereo.setInv(25);
+        stereo.setMax_inv(100);
+        stereo.setMin_inv(1);
 
         InhousePart steering = new InhousePart();
         steering.setId(3);
         steering.setName("Steering");
         steering.setPrice(249.99);
         steering.setInv(25);
+        steering.setMax_inv(100);
+        stereo.setMin_inv(1);
 
         InhousePart spoiler = new InhousePart();
         spoiler.setId(4);
         spoiler.setName("Spoiler");
         spoiler.setPrice(249.99);
         spoiler.setInv(25);
+        spoiler.setMax_inv(100);
+        spoiler.setMin_inv(1);
 
         InhousePart engine = new InhousePart();
         engine.setId(5);
         engine.setName("Engine");
         engine.setPrice(249.99);
         engine.setInv(25);
+        engine.setMax_inv(100);
+        engine.setMin_inv(1);
 
         sampleParts.add(tire);
         sampleParts.add(stereo);

@@ -22,7 +22,13 @@
 <p><input type="text" th:field="*{inv}" placeholder="Inventory" class="form-control mb-4 col-4"/></p>
     <p th:if="${#fields.hasErrors('inv')}" th:errors="*{inv}">Inventory Error</p>
 
+    <p><input type="text" th:field="*{max_inv}" placeholder="Max Inventory" class="form-control mb-4 col-4"/></p>
+
+    <p><input type="text" th:field="*{min_inv}" placeholder="Min Inventory" class="form-control mb-4 col-4"/></p>
+
     <p><input type="text" th:field="*{companyName}" placeholder="Company Name" class="form-control mb-4 col-4"/></p>
+
+    <p th:each="err : ${#fields.allErrors()}" th:text="${err}"></p>
 
 <p><input type="submit" value="Submit" /></p>
 </form>

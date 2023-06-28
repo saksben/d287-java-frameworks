@@ -36,6 +36,8 @@
             <th>Name</th>
             <th>Price</th>
             <th>Inventory</th>
+            <th>Max Inventory</th>
+            <th>Min Inventory</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -44,6 +46,8 @@
             <td th:text="${tempPart.name}">1</td>
             <td th:text="${tempPart.price}">1</td>
             <td th:text="${tempPart.inv}">1</td>
+            <td th:text="${tempPart.max_inv}">1</td>
+            <td th:text="${tempPart.min_inv}">1</td>
             <td><a th:href="@{/showPartFormForUpdate(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
                 <a th:href="@{/deletepart(partID=${tempPart.id})}" class="btn btn-primary btn-sm mb-3"
                    onclick="if(!(confirm('Are you sure you want to delete this part?')))return false">Delete</a>

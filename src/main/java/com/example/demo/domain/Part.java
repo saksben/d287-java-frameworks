@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import com.example.demo.validators.ValidDeletePart;
+import com.example.demo.validators.ValidMinMax;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -17,6 +18,7 @@ import java.util.Set;
  */
 @Entity
 @ValidDeletePart
+@ValidMinMax
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="part_type",discriminatorType = DiscriminatorType.INTEGER)
 @Table(name="Parts")
@@ -29,6 +31,11 @@ public abstract class Part implements Serializable {
     double price;
     @Min(value = 0, message = "Inventory value must be positive")
     int inv;
+    @Column(name = "MAX_INV")
+    int max_inv;
+    @Column(name = "MIN_INV")
+    int min_inv;
+
 
     @ManyToMany
     @JoinTable(name="product_part", joinColumns = @JoinColumn(name="part_id"),
@@ -49,6 +56,23 @@ public abstract class Part implements Serializable {
         this.name = name;
         this.price = price;
         this.inv = inv;
+    }
+
+        public Part(String name, double price, int inv, int max_inv, int min_inv) {
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+        this.max_inv = max_inv;
+        this.min_inv = min_inv;
+    }
+
+    public Part(long id, String name, double price, int inv, int max_inv, int min_inv) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.inv = inv;
+        this.max_inv = max_inv;
+        this.min_inv = min_inv;
     }
 
     public void multiPart() {
@@ -85,6 +109,22 @@ public abstract class Part implements Serializable {
 
     public void setInv(int inv) {
         this.inv = inv;
+    }
+
+    public int getMax_inv() {
+        return max_inv;
+    }
+
+    public void setMax_inv(int max_inv) {
+        this.max_inv = max_inv;
+    }
+
+    public int getMin_inv() {
+        return min_inv;
+    }
+
+    public void setMin_inv(int min_inv) {
+        this.min_inv = min_inv;
     }
 
     public Set<Product> getProducts() {
