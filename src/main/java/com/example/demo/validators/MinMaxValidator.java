@@ -14,13 +14,35 @@ public class MinMaxValidator implements ConstraintValidator<ValidMinMax, Part> {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
+//    @Override
+//    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+//        if (part.getInv() <= part.getMax_inv() && part.getInv() >= part.getMin_inv()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+
     @Override
     public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
-        if (part.getInv() <= part.getMax_inv() && part.getInv() >= part.getMin_inv()) {
-            return true;
-        } else {
-            return false;
-        }
+        constraintValidatorContext.disableDefaultConstraintViolation();
+
+        return constraintMin(part, constraintValidatorContext) && constraintMax(part, constraintValidatorContext);
     }
 
+    public boolean constraintMin(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (part.getInv() < part.getMin_inv()) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Inventory must be greater than min.").addConstraintViolation();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean constraintMax(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (part.getInv() > part.getMax_inv()) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Inventory must be less than max.").addConstraintViolation();
+            return false;
+        }
+        return true;
+    }
 }

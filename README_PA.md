@@ -475,10 +475,41 @@ public @interface ValidMinMax {
 **Display error messages for low inventory when adding and updating parts if the inventory is less than the minimum number of parts.**
 **Display error messages for low inventory when adding and updating products lowers the part inventory below the minimum.**
 **Display error messages when adding and updating parts if the inventory is greater than the maximum.**
-**File name:** 
-**Line:** 
-**Change description:** 
+**File name:** MinMaxValidator.java
+**Line:** 17-47
+**Change description:** comments out previous catch-all validation, creates validation that specifies min and max
 **Change:** 
+17//  @Override
+//    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+//        if (part.getInv() <= part.getMax_inv() && part.getInv() >= part.getMin_inv()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+
+    @Override
+    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        constraintValidatorContext.disableDefaultConstraintViolation();
+
+        return constraintMin(part, constraintValidatorContext) && constraintMax(part, constraintValidatorContext);
+    }
+
+    public boolean constraintMin(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (part.getInv() < part.getMin_inv()) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Inventory must be greater than min.").addConstraintViolation();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean constraintMax(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if (part.getInv() > part.getMax_inv()) {
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Inventory must be less than max.").addConstraintViolation();
+            return false;
+        }
+        return true;
+    }
 
 ***I. Add at least two unit tests for the maximum and minimum fields to the PartTest class in the test package.***
 **File name:** 
