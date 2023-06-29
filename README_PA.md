@@ -553,7 +553,62 @@ public @interface ValidMinMax {
     }
 
 ***J. Remove the class files for any unused validators in order to clean your code.***
-**File name:** 
-**Line:** 
-**Change description:** 
+**File name:** Part.java
+**Line:** 20 (deleted)
+**Change description:** deletes the unused @ValidDeletePart annotation
 **Change:** 
+(deleted) 
+<!-- 20 @ValidDeletePart -->
+
+**File name:** ValidDeletePart.java (deleted)
+**Line:** 1-15
+**Change description:** deletes the unused ValidDeletePart.java validation annotation file
+**Change:** 
+(deleted all)
+<!-- package com.example.demo.validators;
+
+import javax.validation.Payload;
+
+/**
+ *
+ *
+ *
+ *
+ */
+public @interface ValidDeletePart {
+    String message() default "Part cannot be deleted if used in a product.";
+    Class<?> [] groups() default {};
+    Class<? extends Payload> [] payload() default {};
+} -->
+
+**File name:** DeletePartValidator.java (deleted)
+**Line:** 1-26 (deleted)
+**Change description:** deletes the unused DeletePartValidator.java validator file
+**Change:** 
+(deleted all)
+<!-- 1package com.example.demo.validators;
+
+import com.example.demo.domain.Part;
+import com.example.demo.domain.Product;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+/**
+ *
+ *
+ *
+ *
+ */
+public class DeletePartValidator implements ConstraintValidator<ValidDeletePart, Part> {
+    @Override
+    public void initialize(ValidDeletePart constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+    }
+
+    @Override
+    public boolean isValid(Part part, ConstraintValidatorContext constraintValidatorContext) {
+        if(part.getProducts().isEmpty()) return true;
+        else return false;
+    }
+} -->
