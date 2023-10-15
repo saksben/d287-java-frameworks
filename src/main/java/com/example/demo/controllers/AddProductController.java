@@ -37,6 +37,7 @@ public class AddProductController {
     private Set<Product> listProducts = new HashSet<>();
     private boolean verify = false;
 
+    //send user to product form and add product to model
     @GetMapping("/showFormAddProduct")
     public String showFormAddPart(Model theModel) {
         theModel.addAttribute("parts", partService.findAll());
@@ -44,6 +45,7 @@ public class AddProductController {
         product1=product;
         theModel.addAttribute("product", product);
 
+        //make a list of all associated parts
         List<Part>availParts=new ArrayList<>();
         for(Part p: partService.findAll()){
             if(!product.getParts().contains(p))availParts.add(p);
@@ -53,6 +55,7 @@ public class AddProductController {
         return "productForm";
     }
 
+    //submit product added by user and display confirmation
     @PostMapping("/showFormAddProduct")
     public String submitForm(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model theModel) {
         theModel.addAttribute("product", product);
@@ -89,6 +92,7 @@ public class AddProductController {
                 product.setInv(0);
             }
 
+            //if there is already a part with the same name, create a multi-pack version
             for (Product thing : listProducts) {
                 if (thing.getName().equals(product.getName())) {
                     verify = true;
@@ -109,6 +113,7 @@ public class AddProductController {
         }
     }
 
+    //update the product
     @GetMapping("/showProductFormForUpdate")
     public String showProductFormForUpdate(@RequestParam("productID") int theId, Model theModel) {
         theModel.addAttribute("parts", partService.findAll());
@@ -128,6 +133,7 @@ public class AddProductController {
         return "productForm";
     }
 
+    //decrement the product by 1
     @GetMapping("/decrementProduct")
     public String decrementProduct(@RequestParam("productID") int theId, Model theModel) {
         ProductService repo = context.getBean(ProductServiceImpl.class);
@@ -142,10 +148,7 @@ public class AddProductController {
         }
     }
 
-    //add Buy Now button here
-    //use a getter/setter to decrement the inventory by 1
-    //return the user to a page that indicates a success message and has a link back to the mainscreen
-
+    //delete the product from db
     @GetMapping("/deleteproduct")
     public String deleteProduct(@RequestParam("productID") int theId, Model theModel) {
         ProductService productService = context.getBean(ProductServiceImpl.class);
@@ -164,8 +167,8 @@ public class AddProductController {
     public AddProductController(PartService partService) {
         this.partService = partService;
     }
-// make the add and remove buttons work
 
+    // make the add and remove buttons work
     @GetMapping("/associatepart")
     public String associatePart(@Valid @RequestParam("partID") int theID, Model theModel){
     //    theModel.addAttribute("product", product);

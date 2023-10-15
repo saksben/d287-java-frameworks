@@ -35,6 +35,7 @@ public class AddOutsourcedPartController {
     @Autowired
     private ApplicationContext context;
 
+    //send user to Outsourced Part form and add part to model
     @GetMapping("/showFormAddOutPart")
     public String showFormAddOutsourcedPart(Model theModel){
         Part part=new OutsourcedPart();
@@ -42,6 +43,7 @@ public class AddOutsourcedPartController {
         return "OutsourcedPartForm";
     }
 
+    //submit part added by user and display confirmation
     @PostMapping("/showFormAddOutPart")
     public String submitForm(@Valid @ModelAttribute("outsourcedpart") OutsourcedPart part, BindingResult bindingResult, Model theModel){
         theModel.addAttribute("outsourcedpart",part);
@@ -53,6 +55,7 @@ public class AddOutsourcedPartController {
         OutsourcedPart op=repo.findById((int)part.getId());
         if(op!=null)part.setProducts(op.getProducts());
 
+            //if there is already a part with the same name, create a multi-pack version
             for (Part thing : listParts) {
                 if (thing.getName().equals(part.getName())) {
                     verify = true;

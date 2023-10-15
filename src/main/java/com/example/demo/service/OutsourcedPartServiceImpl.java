@@ -23,11 +23,13 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
         this.partRepository = partRepository;
     }
 
+    //method to find all outsourced parts in the repo
     @Override
     public List<OutsourcedPart> findAll() {
         return (List<OutsourcedPart>) partRepository.findAll();
     }
 
+    //method to find an inhouse part in the repo by its id
     @Override
     public OutsourcedPart findById(int theId) {
         Long theIdl=(long)theId;
@@ -47,12 +49,14 @@ public class OutsourcedPartServiceImpl implements OutsourcedPartService{
         return thePart;
     }
 
+    //method to save the inhouse part to the repo
     @Override
     public void save(OutsourcedPart thePart) {
         partRepository.save(thePart);
 
     }
 
+    //method to delete the inhouse part from the repo by its id
     @Override
     public void deleteById(int theId) {
         Long theIdl=(long)theId;

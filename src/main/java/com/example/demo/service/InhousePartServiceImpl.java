@@ -25,11 +25,13 @@ public class InhousePartServiceImpl implements InhousePartService {
         this.partRepository = partRepository;
     }
 
+    //method to find all inhouse parts in the repo
     @Override
     public List<InhousePart> findAll() {
         return (List<InhousePart>) partRepository.findAll();
     }
 
+    //method to find an inhouse part in the repo by its id
     @Override
     public InhousePart findById(int theId) {
         Long theIdl=(long)theId;
@@ -49,12 +51,14 @@ public class InhousePartServiceImpl implements InhousePartService {
         return thePart;
     }
 
+    //method to save the inhouse part to the repo
     @Override
     public void save(InhousePart thePart) {
         partRepository.save(thePart);
 
     }
 
+    //method to delete the inhouse part from the repo by its id
     @Override
     public void deleteById(int theId) {
         Long theIdl=(long)theId;

@@ -26,6 +26,7 @@ public class PartServiceImpl implements PartService{
         this.partRepository = partRepository;
     }
 
+    //method to find all parts in the repo
     @Override
     public List<Part> findAll() {
         return (List<Part>) partRepository.findAll();
@@ -36,6 +37,8 @@ public class PartServiceImpl implements PartService{
         }
         return (List<Part>) partRepository.findAll();
     }
+
+    //method to find a part in the repo by its id
     @Override
     public Part findById(int theId) {
         Long theIdl=(long)theId;
@@ -54,12 +57,14 @@ public class PartServiceImpl implements PartService{
         return thePart;
     }
 
+    //method to save a part to the repo
     @Override
     public void save(Part thePart) {
             partRepository.save(thePart);
 
     }
 
+    //method to delete a part from the repo by its id
     @Override
     public void deleteById(int theId) {
         Long theIdl=(long)theId;

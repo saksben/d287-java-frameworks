@@ -33,6 +33,7 @@ public class AddPartController {
         OutsourcedPartService outsourcedrepo=context.getBean(OutsourcedPartServiceImpl.class);
         InhousePartService inhouserepo=context.getBean(InhousePartServiceImpl.class);
 
+        //determine whether part is inhouse/outsourced, and update it
         boolean inhouse=true;
         List<OutsourcedPart> outsourcedParts=outsourcedrepo.findAll();
         for(OutsourcedPart outsourcedPart:outsourcedParts) {
@@ -52,6 +53,7 @@ public class AddPartController {
         return formtype;
     }
 
+    //delete part from db if it is not associated with a product, else error
     @GetMapping("/deletepart")
     public String deletePart(@Valid @RequestParam("partID") int theId,  Model theModel){
         PartService repo = context.getBean(PartServiceImpl.class);

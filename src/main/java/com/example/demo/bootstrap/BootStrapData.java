@@ -55,6 +55,8 @@ public class BootStrapData implements CommandLineRunner {
 
         System.out.println(thePart.getCompanyName());
         */
+
+        //prints all outsourced parts' name and company to the console
         List<OutsourcedPart> outsourcedParts=(List<OutsourcedPart>) outsourcedPartRepository.findAll();
         for(OutsourcedPart part:outsourcedParts){
             System.out.println(part.getName()+" "+part.getCompanyName());
@@ -70,6 +72,7 @@ public class BootStrapData implements CommandLineRunner {
         Set<Product> sampleProducts = new HashSet<Product>();
         Set<Part> sampleParts = new HashSet<>();
 
+        //adds sample car Products to the db
         Product camaro = new Product(1, "Chevrolet Camaro", 27795.00, 7);
         Product mustang = new Product(2, "Ford Mustang", 27770.00, 5);
         Product challenger = new Product(3, "Dodge Challenger", 30545.00, 4);
@@ -90,6 +93,7 @@ public class BootStrapData implements CommandLineRunner {
 //        Part spoiler = new InhousePart("Spoiler", 99.97, 7);
 //        Part engine = new InhousePart("V8 Engine", 6999.97, 5);
 
+        //adds sample car Parts to the db
         InhousePart tire = new InhousePart();
         tire.setId(1);
         tire.setName("Tire");
@@ -137,7 +141,7 @@ public class BootStrapData implements CommandLineRunner {
         sampleParts.add(engine);
 
 
-
+        //if there are no Parts or Products in the db, add sample data
         if (partRepository.count() == 0 && productRepository.count() == 0) {
             for (Product product : sampleProducts) {
                 productRepository.save(product);

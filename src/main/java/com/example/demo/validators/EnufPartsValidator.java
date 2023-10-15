@@ -25,6 +25,7 @@ public class EnufPartsValidator implements ConstraintValidator<ValidEnufParts, P
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
+    //validates whether there are enough parts in the db to add the product
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
         if(context==null) return true;

@@ -26,11 +26,13 @@ public class ProductServiceImpl implements ProductService{
         this.productRepository = productRepository;
     }
 
+    //find all products in the repo
     @Override
     public List<Product> findAll() {
         return (List<Product>) productRepository.findAll();
     }
 
+    //find a product in the repo by its id
     @Override
     public Product findById(int theId) {
         Long theIdl=(long)theId;
@@ -49,12 +51,14 @@ public class ProductServiceImpl implements ProductService{
         return theProduct;
     }
 
+    //save a product to the repo
     @Override
     public void save(Product theProduct) {
         productRepository.save(theProduct);
 
     }
 
+    //delete a product from the repo by its id
     @Override
     public void deleteById(int theId) {
         Long theIdl=(long)theId;

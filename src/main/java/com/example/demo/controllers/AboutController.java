@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/about")
 public class AboutController {
 
+    //creates endpoint to display About page
     @GetMapping
     public String showAbout() {
         return "about";

@@ -40,9 +40,11 @@ public class MainScreenControllerr {
         this.partService=partService;
         this.productService=productService;
     }
+
+    //list all parts and products from db
     @GetMapping("/mainscreen")
     public String listPartsandProducts(Model theModel, @Param("partkeyword") String partkeyword, @Param("productkeyword") String productkeyword){
-        //add to the sprig model
+        //add to the spring model
         List<Part> partList=partService.listAll(partkeyword);
         theModel.addAttribute("parts",partList);
         theModel.addAttribute("partkeyword",partkeyword);

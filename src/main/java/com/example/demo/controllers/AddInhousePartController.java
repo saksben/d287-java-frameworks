@@ -34,6 +34,7 @@ public class AddInhousePartController{
     @Autowired
     private ApplicationContext context;
 
+    //send user to Inhouse Part form and add part to model
     @GetMapping("/showFormAddInPart")
     public String showFormAddInhousePart(Model theModel){
         InhousePart inhousepart=new InhousePart();
@@ -41,6 +42,7 @@ public class AddInhousePartController{
         return "InhousePartForm";
     }
 
+    //submit part added by user and display confirmation
     @PostMapping("/showFormAddInPart")
     public String submitForm(@Valid @ModelAttribute("inhousepart") InhousePart part, BindingResult theBindingResult, Model theModel){
         theModel.addAttribute("inhousepart",part);
@@ -52,6 +54,7 @@ public class AddInhousePartController{
         InhousePart ip=repo.findById((int)part.getId());
         if(ip!=null)part.setProducts(ip.getProducts());
 
+            //if there is already a part with the same name, create a multi-pack version
             for (Part thing : listParts) {
                 if (thing.getName().equals(part.getName())) {
                     verify = true;

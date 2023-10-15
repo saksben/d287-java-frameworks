@@ -30,6 +30,7 @@ public class PriceProductValidator implements ConstraintValidator<ValidProductPr
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
+    //validates whether the product price is equal to or greater than the sum of all its associated parts
     @Override
     public boolean isValid(Product product, ConstraintValidatorContext constraintValidatorContext) {
         if(context==null) return true;
