@@ -1,8 +1,6 @@
 # Web Inventory System
 
-## D287 – JAVA FRAMEWORKS
-
-This university project was an opportunity for me to implement user interfaces and learn to leverage existing frameworks, assets, and content for object-oriented programming.
+This project was an opportunity for me to implement user interfaces and learn to leverage existing frameworks, assets, and content for object-oriented programming.
 
 Through it, I was able to:
 
